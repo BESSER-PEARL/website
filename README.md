@@ -1,7 +1,7 @@
 Freelancer Jekyll theme  
 =========================
 
-Jekyll theme based on [Freelancer bootstrap theme ](http://startbootstrap.com/template-overviews/freelancer/)
+Jekyll theme based on [Freelancer bootstrap theme ](https://startbootstrap.com/theme/freelancer)
 
 ## How to update home page
 - Make changes in _config.yml and _includes/about.html
