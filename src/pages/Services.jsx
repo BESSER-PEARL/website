@@ -35,8 +35,8 @@ export default function Services() {
           <span className="section-eyebrow">Services</span>
           <h1 className="h2 mt-4 text-4xl sm:text-5xl">Discover what else BESSER can do for you.</h1>
           <p className="lede">
-            The platform itself is <strong className="text-ink-900">100% free</strong>. No freemium, no hidden fees.
-            On top of it we offer a few professional services to teams that need extra help — and we&rsquo;re happy to discuss anything not listed below.
+            BESSER is <strong className="text-ink-900">free and open source</strong> — no freemium, no hidden fees.
+            Below are a few areas where we typically collaborate with research and engineering teams. If your situation is different, just reach out.
           </p>
         </motion.div>
       </section>
