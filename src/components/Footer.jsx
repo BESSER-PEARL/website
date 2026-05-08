@@ -6,11 +6,13 @@ export default function Footer() {
     <footer className="border-t border-ink-200 bg-ink-50/60">
       <div className="container-wide grid gap-10 py-14 md:grid-cols-4">
         <div>
-          <Link to="/" className="flex items-center gap-2.5">
-            <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 text-white">
-              <span className="font-display text-sm font-bold">B</span>
-            </span>
-            <span className="font-display text-lg font-bold text-ink-900">BESSER</span>
+          <Link to="/" className="inline-flex items-center" aria-label="BESSER home">
+            <img
+              src={import.meta.env.BASE_URL + 'brand/besser_logo.webp'}
+              alt="BESSER"
+              className="h-9 w-auto"
+              decoding="async"
+            />
           </Link>
           <p className="mt-4 max-w-xs text-sm text-ink-600">
             An open-source low-code platform for building smart, AI-enhanced applications faster.

@@ -37,13 +37,13 @@ export default function Nav() {
       ].join(' ')}
     >
       <div className="container-wide flex h-16 items-center justify-between gap-4">
-        <Link to="/" className="flex items-center gap-2.5">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-soft">
-            <span className="font-display text-sm font-bold">B</span>
-          </span>
-          <span className="font-display text-lg font-bold tracking-tight text-ink-900">
-            BESSER
-          </span>
+        <Link to="/" className="flex items-center" aria-label="BESSER home">
+          <img
+            src={import.meta.env.BASE_URL + 'brand/besser_logo.webp'}
+            alt="BESSER"
+            className="h-9 w-auto"
+            decoding="async"
+          />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
