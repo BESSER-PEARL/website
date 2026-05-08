@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Github, PlayCircle, Blocks, Sparkles, Rocket, Plus } from 'lucide-react';
+import { ArrowRight, BookOpen, Github, PlayCircle } from 'lucide-react';
 import { heroFeatures, techStack } from '../data/features';
 
 const fade = {
@@ -109,108 +109,6 @@ export default function Home() {
                 </span>
               ))}
             </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Visual blocks + AI = Smart web app */}
-      <section className="relative overflow-hidden border-y border-ink-200/70 bg-gradient-to-b from-white to-brand-50/30">
-        <div className="absolute -top-24 left-1/2 -z-10 h-72 w-[600px] -translate-x-1/2 rounded-full bg-brand-200/30 blur-3xl" />
-
-        <div className="container-wide py-24">
-          <motion.div {...fade} className="mx-auto max-w-3xl text-center">
-            <span className="section-eyebrow">The BESSER way</span>
-            <h2 className="h2 mt-4">
-              Visual blocks meet{' '}
-              <span className="bg-gradient-to-br from-brand-500 to-brand-700 bg-clip-text text-transparent">
-                AI
-              </span>
-              {' '}— your shortest path to a smart app.
-            </h2>
-            <p className="lede mx-auto">
-              BESSER makes building software effortless. Mix intuitive visual blocks with AI assistance to design your model — and walk away with a complete, production-ready smart web application.
-            </p>
-          </motion.div>
-
-          {/* Flow: Blocks + AI → Smart app */}
-          <div className="mt-16 grid items-stretch gap-6 md:grid-cols-[1fr_auto_1fr_auto_1fr]">
-            <motion.div
-              {...fade}
-              transition={{ ...fade.transition, delay: 0.05 }}
-              className="card card-hover text-center"
-            >
-              <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-brand-50 text-brand-600">
-                <Blocks className="h-7 w-7" />
-              </div>
-              <h3 className="mt-5 font-display text-xl font-semibold text-ink-900">Visual blocks</h3>
-              <p className="mt-2 text-sm text-ink-600">
-                Compose your model with intuitive drag-and-drop blocks. No boilerplate, no setup — just snap pieces together.
-              </p>
-            </motion.div>
-
-            <motion.div
-              {...fade}
-              transition={{ ...fade.transition, delay: 0.1 }}
-              className="hidden md:flex items-center justify-center"
-            >
-              <div className="grid h-10 w-10 place-items-center rounded-full border border-brand-200 bg-white text-brand-500 shadow-sm">
-                <Plus className="h-5 w-5" />
-              </div>
-            </motion.div>
-
-            <motion.div
-              {...fade}
-              transition={{ ...fade.transition, delay: 0.15 }}
-              className="card card-hover text-center"
-            >
-              <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-brand-50 text-brand-600">
-                <Sparkles className="h-7 w-7" />
-              </div>
-              <h3 className="mt-5 font-display text-xl font-semibold text-ink-900">AI assistance</h3>
-              <p className="mt-2 text-sm text-ink-600">
-                Describe what you need in plain language and let AI extend, refine, and complete your model alongside you.
-              </p>
-            </motion.div>
-
-            <motion.div
-              {...fade}
-              transition={{ ...fade.transition, delay: 0.2 }}
-              className="hidden md:flex items-center justify-center"
-            >
-              <div className="grid h-10 w-10 place-items-center rounded-full border border-brand-200 bg-white text-brand-500 shadow-sm">
-                <ArrowRight className="h-5 w-5" />
-              </div>
-            </motion.div>
-
-            <motion.div
-              {...fade}
-              transition={{ ...fade.transition, delay: 0.25 }}
-              className="card card-hover relative overflow-hidden border-brand-200 bg-gradient-to-br from-brand-50 via-white to-brand-50 text-center"
-            >
-              <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-brand-200/40 blur-2xl" />
-              <div className="relative">
-                <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-lg shadow-brand-500/30">
-                  <Rocket className="h-7 w-7" />
-                </div>
-                <h3 className="mt-5 font-display text-xl font-semibold text-ink-900">A complete smart web app</h3>
-                <p className="mt-2 text-sm text-ink-600">
-                  Generate a deployable application end-to-end — backend, database, AI agents, and UI included.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-
-          <motion.div
-            {...fade}
-            transition={{ ...fade.transition, delay: 0.3 }}
-            className="mt-12 flex flex-wrap items-center justify-center gap-3"
-          >
-            <a href="https://editor.besser-pearl.org" target="_blank" rel="noopener" className="btn-primary">
-              <PlayCircle className="h-4 w-4" /> Try it in the editor
-            </a>
-            <Link to="/features" className="btn-secondary">
-              Explore the features <ArrowRight className="h-4 w-4" />
-            </Link>
           </motion.div>
         </div>
       </section>
