@@ -20,7 +20,7 @@ export default function Footer() {
           <div className="mt-5 flex items-center gap-2">
             <a className="rounded-lg p-2 text-ink-600 hover:bg-ink-100 hover:text-ink-900" href="https://github.com/BESSER-PEARL" target="_blank" rel="noopener" aria-label="GitHub"><Github className="h-5 w-5" /></a>
             <a className="rounded-lg p-2 text-ink-600 hover:bg-ink-100 hover:text-ink-900" href="https://www.linkedin.com/company/besser-pearl" target="_blank" rel="noopener" aria-label="LinkedIn"><Linkedin className="h-5 w-5" /></a>
-            <a className="rounded-lg p-2 text-ink-600 hover:bg-ink-100 hover:text-ink-900" href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube"><Youtube className="h-5 w-5" /></a>
+            <a className="rounded-lg p-2 text-ink-600 hover:bg-ink-100 hover:text-ink-900" href="https://www.youtube.com/@BESSER-PEARL" target="_blank" rel="noopener" aria-label="YouTube"><Youtube className="h-5 w-5" /></a>
           </div>
         </div>
 
