@@ -17,7 +17,8 @@ export default function Home() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 grid-bg opacity-70" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white via-white to-brand-50/50" />
-        <div className="absolute -top-32 left-1/2 -z-10 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-br from-brand-200/40 via-brand-100/30 to-transparent blur-3xl" />
+        <div className="blob animate-drift -top-32 left-1/4 -z-10 h-[420px] w-[640px] bg-gradient-to-br from-brand-300/40 via-brand-200/30 to-transparent" />
+        <div className="blob animate-drift-2 -top-24 right-1/4 -z-10 h-[360px] w-[520px] bg-gradient-to-br from-sky-300/30 via-brand-200/30 to-transparent" />
 
         <div className="container-narrow pt-20 pb-24 sm:pt-28 sm:pb-32">
           <motion.h1
@@ -146,22 +147,42 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Stats strip */}
+      <section className="border-y border-ink-200/70 bg-white">
+        <div className="container-wide grid grid-cols-2 gap-8 py-14 sm:grid-cols-4">
+          {[
+            { n: '8+',  l: 'Code generators' },
+            { n: '31',  l: 'Peer-reviewed papers' },
+            { n: '23',  l: 'Researchers &amp; engineers' },
+            { n: '2',   l: 'EU Horizon projects' },
+          ].map((s, i) => (
+            <motion.div key={s.l} {...fade} transition={{ ...fade.transition, delay: 0.04 * i }} className="text-center sm:text-left">
+              <div className="bg-gradient-to-br from-brand-500 to-brand-700 bg-clip-text font-display text-5xl font-bold tracking-tight text-transparent sm:text-6xl">
+                {s.n}
+              </div>
+              <div className="mt-2 text-sm font-medium text-ink-500" dangerouslySetInnerHTML={{ __html: s.l }} />
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       {/* 3 columns explainer */}
       <section className="container-wide py-24">
         <motion.div {...fade} className="max-w-2xl">
           <span className="section-eyebrow">How it works</span>
           <h2 className="h2 mt-4">Model once. Generate everything.</h2>
+          <p className="lede">From a single, simple model — code, infrastructure, AI agents, and deployments fall out the other side.</p>
         </motion.div>
 
-        <div className="mt-12 grid gap-10 md:grid-cols-3">
+        <div className="mt-14 grid gap-10 md:grid-cols-3">
           {[
-            { n: '01', t: 'Model-based', d: 'Model all aspects of your software system in the same tool — class diagrams, state machines, agents, deployment specs.' },
+            { n: '01', t: 'Model-based',     d: 'Model all aspects of your software system in the same tool — class diagrams, state machines, agents, deployment specs.' },
             { n: '02', t: 'No installation', d: 'Use our online editor to model, generate, and deploy. Nothing to install. Free forever.' },
-            { n: '03', t: 'Customizable',   d: 'All aspects of BESSER can be tailored to your needs — generators, modeling languages, even the editor.' },
+            { n: '03', t: 'Customizable',    d: 'All aspects of BESSER can be tailored — generators, modeling languages, even the editor itself.' },
           ].map((s, i) => (
-            <motion.div key={s.n} {...fade} transition={{ ...fade.transition, delay: 0.05 * i }}>
-              <div className="font-mono text-xs font-medium tracking-widest text-brand-600">{s.n}</div>
-              <h3 className="mt-3 font-display text-2xl font-semibold text-ink-900">{s.t}</h3>
+            <motion.div key={s.n} {...fade} transition={{ ...fade.transition, delay: 0.05 * i }} className="relative">
+              <div className="step-num">{s.n}</div>
+              <h3 className="mt-5 font-display text-2xl font-semibold text-ink-900">{s.t}</h3>
               <p className="mt-3 text-ink-600">{s.d}</p>
             </motion.div>
           ))}
