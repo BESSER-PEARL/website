@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { font-feature-settings: "ss01", "cv11"; }
+  ::selection { background: #dbeafe; color: #1e3a8a; }
+}
+
+@layer components {
+  .container-narrow { @apply mx-auto max-w-6xl px-5 sm:px-6 lg:px-8; }
+  .container-wide   { @apply mx-auto max-w-7xl px-5 sm:px-6 lg:px-8; }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-xl bg-brand-600 px-5 py-3 text-sm font-semibold text-white
+           shadow-soft transition hover:bg-brand-700 hover:-translate-y-0.5 active:translate-y-0;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 rounded-xl border border-ink-200 bg-white px-5 py-3 text-sm font-semibold text-ink-700
+           transition hover:border-ink-300 hover:bg-ink-50;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-ink-600
+           transition hover:text-ink-900 hover:bg-ink-100;
+  }
+
+  .card {
+    @apply rounded-2xl border border-ink-200/70 bg-white p-6 shadow-soft transition;
+  }
+  .card-hover {
+    @apply hover:-translate-y-1 hover:border-brand-200 hover:shadow-[0_20px_50px_-15px_rgba(37,99,235,0.20)];
+  }
+
+  .section-eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-brand-200/70 bg-brand-50 px-3 py-1
+           text-xs font-medium text-brand-700;
+  }
+  .h2 {
+    @apply font-display text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl;
+  }
+  .lede {
+    @apply mt-3 max-w-2xl text-base text-ink-600 sm:text-lg;
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+}

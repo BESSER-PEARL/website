@@ -1,9 +1,15 @@
+node_modules
+dist
+dist-ssr
+*.local
+.vite
+
+# OS
 .DS_Store
+Thumbs.db
 
-_site
-.sass-cache
-.jekyll-cache
-.jekyll-metadata
+# Editor
+.vscode/*
+!.vscode/extensions.json
 .idea
-
-Gemfile.lock
+*.sw?

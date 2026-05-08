@@ -1,47 +1,47 @@
-Freelancer Jekyll theme  
-=========================
+# BESSER website
 
-Jekyll theme based on [Freelancer bootstrap theme ](https://startbootstrap.com/theme/freelancer)
+Source for [besser-pearl.org](https://besser-pearl.org/) — built with Vite + React + Tailwind, deployed to GitHub Pages.
 
-## How to update home page
-- Make changes in _config.yml and _includes/about.html
+## Stack
 
-## How to deploy locally
+- **Vite** — bundler / dev server
+- **React 18** + **React Router 6** — UI + routing
+- **Tailwind CSS** — styling
+- **Framer Motion** — scroll-reveal + micro-interactions
+- **Lucide** — icons
 
-Ruby and Jekyll Installation guide: https://jekyllrb.com/docs/
+## Local development
 
-Clone this repo and run:
-
-```shell
-bundle exec jekyll serve
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # → dist/
+npm run preview  # serve the production build
 ```
 
-The webpage is accessible from http://localhost:4000
+## Project layout
 
-## How to add scientific publications
-
-- Add a new row in `_data/publications.csv`. The order is not relevant since they are ordered by year and then by typer of publication.
-- Mandatory fields: `year`, `authors`, `name`, `type`, `info` 
-  - `type` must be one of the following: `conference`, `journal` or `workshop`.
-  - `info` is used to add details about the publication journal, conference or workshop
-- Optional fields: `link` (it creates a hyperlink on the publication name, if you have a DOI link, put it here)
-
-## How to add new members
- - Place a image in `/img/portfolio/`
- - create new markdown file with the following text
-```txt
----
-layout: default
-modal-id: 8
-date: date 
-img: path to image of new team member
-name: name of new team member
-alt: anything 
-linkedin: link to linkedin of new team member
-gscholar: link to google scholar of new team member
-github: link to github of new team member
-description: description of new team member
-
----
+```
+public/                static assets (team photos, logo, favicon)
+src/
+  components/          Nav, Footer
+  data/                team.js, features.js, research.js — content lives here
+  pages/               Home, Features, Research, Team, Contact, NotFound
+  App.jsx              layout shell with <Outlet/>
+  main.jsx             router + render
+  index.css            Tailwind base + component utilities
+.github/workflows/
+  deploy.yml           GH Pages CI (build + publish on push to `redesign`)
 ```
 
+## Editing content
+
+- **Team members** → `src/data/team.js` (drop new photo in `public/team/`).
+- **Features** → `src/data/features.js`.
+- **Research projects** → `src/data/research.js`.
+
+## Deployment
+
+Pushing to the `redesign` branch triggers `.github/workflows/deploy.yml`, which builds the site and publishes the `dist/` folder via GitHub Pages.
+
+When ready to go live, point the `besser-pearl.org` DNS at GitHub Pages and merge `redesign` → `main`.
