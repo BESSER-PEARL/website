@@ -4,6 +4,7 @@ import { Menu, X, Github, ExternalLink } from 'lucide-react';
 
 const items = [
   { to: '/features', label: 'Features' },
+  { to: '/services', label: 'Services' },
   { to: '/research', label: 'Research' },
   { to: '/team',     label: 'Team' },
   { to: '/contact',  label: 'Contact' },
@@ -11,6 +12,7 @@ const items = [
 
 const externals = [
   { href: 'https://besser.readthedocs.io/en/latest/', label: 'Docs' },
+  { href: 'https://modeling-languages.com/',          label: 'Blog' },
   { href: 'https://lowcode-book.com/',                label: 'Book' },
 ];
 

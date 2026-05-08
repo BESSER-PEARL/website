@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
 import Home from './pages/Home';
 import Features from './pages/Features';
+import Services from './pages/Services';
 import Research from './pages/Research';
 import Team from './pages/Team';
 import Contact from './pages/Contact';
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
           <Route path="features" element={<Features />} />
+          <Route path="services" element={<Services />} />
           <Route path="research" element={<Research />} />
           <Route path="team" element={<Team />} />
           <Route path="contact" element={<Contact />} />

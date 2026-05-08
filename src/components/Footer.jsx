@@ -26,14 +26,15 @@ export default function Footer() {
 
         <FooterCol title="Product" links={[
           { to: '/features',     label: 'Features' },
+          { to: '/services',     label: 'Services' },
           { href: 'https://editor.besser-pearl.org',         label: 'Online editor', external: true },
           { href: 'https://besser.readthedocs.io/en/latest/', label: 'Documentation', external: true },
           { href: 'https://github.com/BESSER-PEARL/BESSER',   label: 'Source code',   external: true },
         ]} />
 
         <FooterCol title="Resources" links={[
-          { href: 'https://lowcode-book.com/',         label: 'Low-code Handbook',  external: true },
           { href: 'https://modeling-languages.com/',   label: 'Blog',               external: true },
+          { href: 'https://lowcode-book.com/',         label: 'Low-code Handbook',  external: true },
           { to: '/research',                            label: 'Research' },
         ]} />
 
