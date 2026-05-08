@@ -34,7 +34,7 @@ export default function Team() {
             >
               <div className="aspect-square overflow-hidden bg-ink-100">
                 <img
-                  src={m.photo}
+                  src={import.meta.env.BASE_URL + m.photo.replace(/^\//, '')}
                   alt={m.name}
                   loading="lazy"
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
