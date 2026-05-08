@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
-import { ArrowUpRight, BookOpen } from 'lucide-react';
+import { ArrowUpRight, BookOpen, Pencil } from 'lucide-react';
 import { venues } from '../data/research';
 import { publications } from '../data/publications';
+
+const EDIT_PUBLICATIONS_URL =
+  'https://github.com/BESSER-PEARL/website/edit/redesign/src/data/publications.js';
 
 const fade = {
   initial: { opacity: 0, y: 14 },
@@ -36,11 +39,21 @@ export default function Research() {
 
       {/* Publications */}
       <section className="container-wide py-16">
-        <motion.div {...fade} className="flex items-end justify-between gap-6">
+        <motion.div {...fade} className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <h2 className="font-display text-2xl font-semibold text-ink-900">Publications</h2>
             <p className="mt-1 text-sm text-ink-600">{publications.length} peer-reviewed papers and counting.</p>
           </div>
+          <a
+            href={EDIT_PUBLICATIONS_URL}
+            target="_blank"
+            rel="noopener"
+            className="btn-secondary text-sm"
+            title="Open the publications file on GitHub. Org members with push access commit directly; everyone else gets a PR flow."
+          >
+            <Pencil className="h-4 w-4" /> Edit on GitHub
+            <ArrowUpRight className="h-4 w-4 opacity-60" />
+          </a>
         </motion.div>
 
         <div className="mt-8 space-y-12">
@@ -69,6 +82,22 @@ export default function Research() {
             </div>
           ))}
         </div>
+
+        <motion.div
+          {...fade}
+          className="mt-10 flex flex-col items-start justify-between gap-4 rounded-2xl border border-dashed border-ink-300 bg-ink-50/50 p-6 sm:flex-row sm:items-center"
+        >
+          <div className="flex items-start gap-3 text-sm text-ink-600">
+            <Pencil className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" />
+            <p>
+              Got a new paper? Add it to <code className="rounded bg-white px-1.5 py-0.5 font-mono text-[12px] text-ink-700">src/data/publications.js</code> on GitHub.
+              Org members with push access commit directly; anyone else opens a quick PR.
+            </p>
+          </div>
+          <a href={EDIT_PUBLICATIONS_URL} target="_blank" rel="noopener" className="btn-primary text-sm whitespace-nowrap">
+            <Pencil className="h-4 w-4" /> Add a publication
+          </a>
+        </motion.div>
       </section>
 
       {/* Venues */}
