@@ -25,13 +25,16 @@ npm run preview  # serve the production build
 public/                static assets (team photos, logo, favicon)
 src/
   components/          Nav, Footer
-  data/                team.js, features.js, research.js — content lives here
-  pages/               Home, Features, Research, Team, Contact, NotFound
+  data/                team.js, features.js, research.js, publications.js — content lives here
+  pages/               Home, Features, Services, Research, Team, Contact, NotFound
   App.jsx              layout shell with <Outlet/>
   main.jsx             router + render
   index.css            Tailwind base + component utilities
+scripts/
+  fetch-publications.mjs   pulls recent DBLP entries → publications.js
 .github/workflows/
-  deploy.yml           GH Pages CI (build + publish on push to `redesign`)
+  deploy.yml               GH Pages CI (build + publish on push to `main`)
+  fetch-publications.yml   weekly DBLP pull → PR
 ```
 
 ## Editing content
@@ -39,9 +42,16 @@ src/
 - **Team members** → `src/data/team.js` (drop new photo in `public/team/`).
 - **Features** → `src/data/features.js`.
 - **Research projects** → `src/data/research.js`.
+- **Publications** → `src/data/publications.js` (auto-augmented; see below).
+
+## Publications auto-fetch
+
+`.github/workflows/fetch-publications.yml` runs every Monday at 06:00 UTC (and via manual dispatch). It seeds off Jordi Cabot's DBLP page (PID `18/948`) — every BESSER paper has him as co-author — and opens a PR with any entries from the current and previous year that aren't yet in `publications.js`. DBLP also indexes Cabot's non-BESSER collaborations, so **the PR is the human filter** — review and prune before merging.
+
+Run it locally with `npm run fetch-publications`.
+
+> Repo setting: Settings → Actions → General → **Allow GitHub Actions to create and approve pull requests** must be enabled.
 
 ## Deployment
 
-Pushing to the `redesign` branch triggers `.github/workflows/deploy.yml`, which builds the site and publishes the `dist/` folder via GitHub Pages.
-
-When ready to go live, point the `besser-pearl.org` DNS at GitHub Pages and merge `redesign` → `main`.
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the site and publishes `dist/` to the `gh-pages` branch via GitHub Pages.
