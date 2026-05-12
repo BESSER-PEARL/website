@@ -1,0 +1,37 @@
+name: Fetch publications
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Mondays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: node scripts/fetch-publications.mjs
+
+      - name: Open PR with new entries
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: bot/fetch-publications
+          delete-branch: true
+          commit-message: 'Publications: pull recent entries from DBLP'
+          title: 'Publications: new entries from DBLP'
+          body: |
+            Automated weekly fetch from Jordi Cabot's DBLP page (PID 18/948).
+
+            Review carefully before merging — DBLP also indexes Cabot's non-BESSER
+            collaborations. Delete any entries that don't belong to the BESSER team,
+            and fix up venue formatting if DBLP's metadata is rough.
