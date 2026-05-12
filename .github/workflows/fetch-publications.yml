@@ -24,7 +24,7 @@ jobs:
       - name: Open PR with new entries
         uses: peter-evans/create-pull-request@v8
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PUBLICATIONS_PR_TOKEN }}
           branch: bot/fetch-publications
           delete-branch: true
           commit-message: 'Publications: pull recent entries from DBLP'
