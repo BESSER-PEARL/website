@@ -19,7 +19,12 @@ jobs:
         with:
           node-version: 20
 
+      - name: Install pdftotext (for Tier 2 acknowledgment check)
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+
       - run: node scripts/fetch-publications.mjs
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
       - name: Open PR with new entries
         uses: peter-evans/create-pull-request@v8
