@@ -1,0 +1,343 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const base = import.meta.env.BASE_URL;
+const logoSrc = `${base}brand/besser_logo.webp`.replace(/\/+/g, '/');
+
+function resolve(to: string) {
+  return `${base}${to.replace(/^\//, '')}`.replace(/\/+/g, '/');
+}
+
+const items = [
+  { to: '/', label: 'Home', exact: true },
+  { to: '/features', label: 'Features' },
+  { to: '/services', label: 'Services' },
+];
+
+const itemsAfter = [
+  { to: '/team', label: 'Team' },
+  { to: '/contact', label: 'Contact' },
+];
+
+const researchLinks = [
+  { to: '/research/publications', label: 'Publications', desc: 'Peer-reviewed papers' },
+  { to: '/research/projects', label: 'Projects', desc: 'Active research initiatives' },
+];
+
+const learnLinks = [
+  { href: 'https://besser.readthedocs.io/en/latest/', label: 'Docs', desc: 'API reference & guides' },
+  { href: 'https://modeling-languages.com/', label: 'Blog', desc: 'Articles from the team' },
+  { href: 'https://lowcode-book.com/', label: 'Book', desc: 'The low-code companion' },
+];
+
+// Strip trailing slash so '/website/' and '/website' compare equal.
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const baseStripped = base.replace(/\/$/, '');
+
+function isActive(to: string, exact = false) {
+  const target = `${baseStripped}${to}`.replace(/\/$/, '') || '/';
+  return exact ? currentPath === target : currentPath === target || currentPath.startsWith(target + '/');
+}
+
+const researchActive = isActive('/research', false);
+---
+<header
+  data-nav
+  class="sticky top-0 z-40 w-full border-b border-transparent bg-transparent transition data-[scrolled]:border-ink-200/80 data-[scrolled]:bg-white/80 data-[scrolled]:backdrop-blur"
+>
+  <div class="container-wide flex h-16 items-center justify-between gap-4">
+    <a href={resolve('/')} class="flex items-center" aria-label="BESSER home">
+      <img src={logoSrc} alt="BESSER" class="h-9 w-auto" decoding="async" />
+    </a>
+
+    <nav class="hidden items-center gap-1 md:flex">
+      {items.map((it) => (
+        <a
+          href={resolve(it.to)}
+          class:list={[
+            'rounded-lg px-3 py-2 text-sm font-medium transition',
+            isActive(it.to, it.exact) ? 'text-brand-700' : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100',
+          ]}
+        >
+          {it.label}
+        </a>
+      ))}
+
+      <div class="relative" data-dropdown>
+        <button
+          type="button"
+          data-dropdown-trigger
+          aria-haspopup="menu"
+          aria-expanded="false"
+          class:list={[
+            'inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition',
+            researchActive ? 'text-brand-700' : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100',
+          ]}
+        >
+          Research
+          <Icon name="lucide:chevron-down" class="h-3.5 w-3.5 opacity-70 transition data-[open]:rotate-180" data-chevron />
+        </button>
+        <div
+          role="menu"
+          data-dropdown-menu
+          class="absolute left-1/2 top-full z-50 mt-1 hidden w-64 -translate-x-1/2 rounded-xl border border-ink-200/80 bg-white p-2 shadow-lg shadow-ink-900/5"
+        >
+          {researchLinks.map((l) => (
+            <a
+              href={resolve(l.to)}
+              class:list={[
+                'block rounded-lg px-3 py-2 text-sm transition',
+                isActive(l.to) ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+              ]}
+            >
+              <div class="font-medium">{l.label}</div>
+              <div class="text-xs text-ink-500">{l.desc}</div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {itemsAfter.map((it) => (
+        <a
+          href={resolve(it.to)}
+          class:list={[
+            'rounded-lg px-3 py-2 text-sm font-medium transition',
+            isActive(it.to) ? 'text-brand-700' : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100',
+          ]}
+        >
+          {it.label}
+        </a>
+      ))}
+
+      <span class="mx-2 h-5 w-px bg-ink-200"></span>
+
+      <div class="relative" data-dropdown>
+        <button
+          type="button"
+          data-dropdown-trigger
+          aria-haspopup="menu"
+          aria-expanded="false"
+          class="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-ink-600 transition hover:text-ink-900 hover:bg-ink-100"
+        >
+          Learn
+          <Icon name="lucide:chevron-down" class="h-3.5 w-3.5 opacity-70 transition data-[open]:rotate-180" data-chevron />
+        </button>
+        <div
+          role="menu"
+          data-dropdown-menu
+          class="absolute left-1/2 top-full z-50 mt-1 hidden w-64 -translate-x-1/2 rounded-xl border border-ink-200/80 bg-white p-2 shadow-lg shadow-ink-900/5"
+        >
+          {learnLinks.map((l) => (
+            <a
+              href={l.href}
+              target="_blank"
+              rel="noopener"
+              class="flex items-start justify-between gap-3 rounded-lg px-3 py-2 text-sm text-ink-700 transition hover:bg-ink-100"
+            >
+              <div>
+                <div class="font-medium">{l.label}</div>
+                <div class="text-xs text-ink-500">{l.desc}</div>
+              </div>
+              <Icon name="lucide:external-link" class="mt-1 h-3.5 w-3.5 shrink-0 opacity-60" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a
+        href="https://github.com/BESSER-PEARL/BESSER"
+        target="_blank"
+        rel="noopener"
+        aria-label="GitHub"
+        class="hidden h-10 w-10 items-center justify-center rounded-lg text-ink-600 hover:bg-ink-100 hover:text-ink-900 sm:inline-flex"
+      >
+        <Icon name="lucide:github" class="h-5 w-5" />
+      </a>
+      <a
+        href="https://editor.besser-pearl.org"
+        target="_blank"
+        rel="noopener"
+        class="btn-primary py-2.5 text-sm"
+      >
+        Try BESSER
+      </a>
+      <button
+        type="button"
+        data-mobile-toggle
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-ink-700 hover:bg-ink-100 md:hidden"
+      >
+        <Icon name="lucide:menu" class="h-5 w-5" data-mobile-icon-closed />
+        <Icon name="lucide:x" class="hidden h-5 w-5" data-mobile-icon-open />
+      </button>
+    </div>
+  </div>
+
+  <div class="hidden border-t border-ink-200/80 bg-white md:hidden" data-mobile-panel>
+    <nav class="container-wide flex flex-col py-3">
+      {items.map((it) => (
+        <a
+          href={resolve(it.to)}
+          class:list={[
+            'rounded-lg px-3 py-3 text-sm font-medium',
+            isActive(it.to, it.exact) ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+          ]}
+        >
+          {it.label}
+        </a>
+      ))}
+
+      <button
+        type="button"
+        data-mobile-group="research"
+        aria-expanded="false"
+        class:list={[
+          'flex items-center justify-between rounded-lg px-3 py-3 text-sm font-medium',
+          researchActive ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+        ]}
+      >
+        Research
+        <Icon name="lucide:chevron-down" class="h-4 w-4 transition data-[open]:rotate-180" data-chevron />
+      </button>
+      <div class="ml-3 mt-1 hidden flex-col border-l border-ink-200 pl-3" data-mobile-group-panel="research">
+        {researchLinks.map((l) => (
+          <a
+            href={resolve(l.to)}
+            class:list={[
+              'rounded-lg px-3 py-2 text-sm font-medium',
+              isActive(l.to) ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+            ]}
+          >
+            {l.label}
+          </a>
+        ))}
+      </div>
+
+      {itemsAfter.map((it) => (
+        <a
+          href={resolve(it.to)}
+          class:list={[
+            'rounded-lg px-3 py-3 text-sm font-medium',
+            isActive(it.to) ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+          ]}
+        >
+          {it.label}
+        </a>
+      ))}
+
+      <hr class="my-2 border-ink-200" />
+
+      <button
+        type="button"
+        data-mobile-group="learn"
+        aria-expanded="false"
+        class="flex items-center justify-between rounded-lg px-3 py-3 text-sm font-medium text-ink-700 hover:bg-ink-100"
+      >
+        Learn
+        <Icon name="lucide:chevron-down" class="h-4 w-4 transition data-[open]:rotate-180" data-chevron />
+      </button>
+      <div class="ml-3 mt-1 hidden flex-col border-l border-ink-200 pl-3" data-mobile-group-panel="learn">
+        {learnLinks.map((l) => (
+          <a
+            href={l.href}
+            target="_blank"
+            rel="noopener"
+            class="flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-ink-700 hover:bg-ink-100"
+          >
+            {l.label}
+            <Icon name="lucide:external-link" class="h-3.5 w-3.5 opacity-60" />
+          </a>
+        ))}
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Scroll state
+  const header = document.querySelector('[data-nav]') as HTMLElement | null;
+  if (header) {
+    const onScroll = () => {
+      if (window.scrollY > 8) header.setAttribute('data-scrolled', '');
+      else header.removeAttribute('data-scrolled');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  // Desktop dropdowns: hover + click, click-outside + Escape close.
+  const dropdowns = document.querySelectorAll<HTMLElement>('[data-dropdown]');
+  const closeAll = () => {
+    for (const dd of dropdowns) {
+      dd.querySelector<HTMLElement>('[data-dropdown-menu]')?.classList.add('hidden');
+      const trigger = dd.querySelector<HTMLElement>('[data-dropdown-trigger]');
+      trigger?.setAttribute('aria-expanded', 'false');
+      dd.querySelector<HTMLElement>('[data-chevron]')?.removeAttribute('data-open');
+    }
+  };
+  for (const dd of dropdowns) {
+    const trigger = dd.querySelector<HTMLElement>('[data-dropdown-trigger]');
+    const menu = dd.querySelector<HTMLElement>('[data-dropdown-menu]');
+    const chevron = dd.querySelector<HTMLElement>('[data-chevron]');
+    if (!trigger || !menu) continue;
+
+    const open = () => {
+      menu.classList.remove('hidden');
+      trigger.setAttribute('aria-expanded', 'true');
+      chevron?.setAttribute('data-open', '');
+    };
+    const close = () => {
+      menu.classList.add('hidden');
+      trigger.setAttribute('aria-expanded', 'false');
+      chevron?.removeAttribute('data-open');
+    };
+    const toggle = () => (menu.classList.contains('hidden') ? open() : close());
+
+    dd.addEventListener('mouseenter', open);
+    dd.addEventListener('mouseleave', close);
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggle();
+    });
+  }
+  document.addEventListener('mousedown', (e) => {
+    const target = e.target as Node;
+    let inside = false;
+    for (const dd of dropdowns) if (dd.contains(target)) { inside = true; break; }
+    if (!inside) closeAll();
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+
+  // Mobile menu toggle
+  const mobileToggle = document.querySelector<HTMLElement>('[data-mobile-toggle]');
+  const mobilePanel = document.querySelector<HTMLElement>('[data-mobile-panel]');
+  const iconClosed = document.querySelector<HTMLElement>('[data-mobile-icon-closed]');
+  const iconOpen = document.querySelector<HTMLElement>('[data-mobile-icon-open]');
+  mobileToggle?.addEventListener('click', () => {
+    if (!mobilePanel) return;
+    const willOpen = mobilePanel.classList.contains('hidden');
+    mobilePanel.classList.toggle('hidden', !willOpen);
+    mobileToggle.setAttribute('aria-expanded', String(willOpen));
+    iconClosed?.classList.toggle('hidden', willOpen);
+    iconOpen?.classList.toggle('hidden', !willOpen);
+  });
+
+  // Mobile sub-groups (Research / Learn)
+  for (const groupBtn of document.querySelectorAll<HTMLElement>('[data-mobile-group]')) {
+    const name = groupBtn.getAttribute('data-mobile-group');
+    const panel = document.querySelector<HTMLElement>(`[data-mobile-group-panel="${name}"]`);
+    const chevron = groupBtn.querySelector<HTMLElement>('[data-chevron]');
+    if (!panel) continue;
+    groupBtn.addEventListener('click', () => {
+      const willOpen = panel.classList.contains('hidden');
+      panel.classList.toggle('hidden', !willOpen);
+      panel.classList.toggle('flex', willOpen);
+      groupBtn.setAttribute('aria-expanded', String(willOpen));
+      if (willOpen) chevron?.setAttribute('data-open', '');
+      else chevron?.removeAttribute('data-open');
+    });
+  }
+</script>

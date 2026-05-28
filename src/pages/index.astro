@@ -1,0 +1,187 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Reveal from '../components/Reveal.astro';
+import { Icon } from 'astro-icon/components';
+import { heroFeatures, techStack } from '../data/features';
+
+const base = import.meta.env.BASE_URL;
+const editorVideo = `${base}media/editor.mp4`.replace(/\/+/g, '/');
+const featuresHref = `${base}features`.replace(/\/+/g, '/');
+const contactHref = `${base}contact`.replace(/\/+/g, '/');
+
+const stats = [
+  { n: '8+',  l: 'Code generators' },
+  { n: '31',  l: 'Peer-reviewed papers' },
+  { n: '23',  l: 'Researchers &amp; engineers' },
+  { n: '2',   l: 'EU Horizon projects' },
+];
+
+const steps = [
+  { n: '01', t: 'Model-based',     d: 'Model all aspects of your software system in the same tool — class diagrams, state machines, agents, deployment specs.' },
+  { n: '02', t: 'No installation', d: 'Use our online editor to model, generate, and deploy. Nothing to install. Free forever.' },
+  { n: '03', t: 'Customizable',    d: 'All aspects of BESSER can be tailored — generators, modeling languages, even the editor itself.' },
+];
+---
+<Layout>
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-10 grid-bg opacity-70"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-white via-white to-brand-50/50"></div>
+    <div class="blob animate-drift -top-32 left-1/4 -z-10 h-[420px] w-[640px] bg-gradient-to-br from-brand-300/40 via-brand-200/30 to-transparent"></div>
+    <div class="blob animate-drift-2 -top-24 right-1/4 -z-10 h-[360px] w-[520px] bg-gradient-to-br from-sky-300/30 via-brand-200/30 to-transparent"></div>
+
+    <div class="container-narrow pt-20 pb-24 sm:pt-28 sm:pb-32">
+      <Reveal as="h1" class="mx-auto max-w-4xl text-center font-display text-5xl font-bold tracking-tight text-ink-900 sm:text-6xl lg:text-7xl">
+        Better software,
+        <span class="bg-gradient-to-br from-brand-500 to-brand-700 bg-clip-text text-transparent">
+          faster
+        </span>.
+      </Reveal>
+
+      <Reveal as="p" delay={100} class="mx-auto mt-6 max-w-2xl text-center text-lg text-ink-600 sm:text-xl">
+        BESSER is an open-source low-code platform to quickly build all types of (smart) applications.
+        Model once — generate APIs, databases, agents, and full deployments.
+      </Reveal>
+
+      <Reveal delay={150} class="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <a href="https://editor.besser-pearl.org" target="_blank" rel="noopener" class="btn-primary">
+          <Icon name="lucide:play-circle" class="h-4 w-4" /> Start now — open the editor
+        </a>
+        <a href="https://besser.readthedocs.io/en/latest/" target="_blank" rel="noopener" class="btn-secondary">
+          <Icon name="lucide:book-open" class="h-4 w-4" /> Read the docs
+        </a>
+        <a href="https://github.com/BESSER-PEARL/BESSER" target="_blank" rel="noopener" class="btn-ghost">
+          <Icon name="lucide:github" class="h-4 w-4" /> Star on GitHub
+        </a>
+      </Reveal>
+
+      <!-- Editor video -->
+      <Reveal delay={200} class="mt-14">
+        <div class="relative mx-auto max-w-5xl">
+          <div class="absolute -inset-x-10 -inset-y-6 -z-10 rounded-[2.5rem] bg-gradient-to-br from-brand-200/40 via-brand-100/30 to-transparent blur-2xl"></div>
+          <div class="overflow-hidden rounded-2xl border border-ink-200 bg-ink-900 shadow-[0_30px_80px_-20px_rgba(15,23,42,0.35)]">
+            <div class="flex items-center justify-between border-b border-white/5 bg-ink-900/70 px-4 py-2.5">
+              <div class="flex gap-1.5">
+                <span class="h-2.5 w-2.5 rounded-full bg-red-400/80"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-amber-400/80"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-400/80"></span>
+              </div>
+              <div class="font-mono text-[11px] text-white/50">editor.besser-pearl.org</div>
+              <div class="w-12"></div>
+            </div>
+            <video
+              class="block w-full"
+              src={editorVideo}
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              aria-label="BESSER online editor in action"
+            ></video>
+          </div>
+        </div>
+        <p class="mt-3 text-center text-xs text-ink-500">
+          The BESSER online editor — model, generate, deploy. Zero install.
+        </p>
+      </Reveal>
+
+      <!-- Stack strip -->
+      <Reveal delay={300} class="mt-20">
+        <p class="text-center text-xs font-medium uppercase tracking-wider text-ink-500">
+          Generates for the stacks you already use
+        </p>
+        <div class="mt-5 flex flex-wrap items-center justify-center gap-2">
+          {techStack.map((t) => (
+            <span class="rounded-full border border-ink-200 bg-white px-3 py-1.5 text-sm text-ink-700">{t}</span>
+          ))}
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- Feature cards -->
+  <section class="border-y border-ink-200/70 bg-ink-50/40">
+    <div class="container-wide py-20">
+      <Reveal class="max-w-2xl">
+        <span class="section-eyebrow">What BESSER gives you</span>
+        <h2 class="h2 mt-4">A complete low-code toolchain — open, AI-powered, and modular.</h2>
+        <p class="lede">From a single model, BESSER produces working software: APIs, databases, full back-ends, AI agents, and deployment manifests.</p>
+      </Reveal>
+
+      <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        {heroFeatures.map((f, i) => (
+          <Reveal as="div" delay={40 * i} class="card card-hover">
+            <div class="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600">
+              <Icon name={`lucide:${f.icon}`} class="h-5 w-5" />
+            </div>
+            <h3 class="mt-5 font-display text-lg font-semibold text-ink-900">{f.title}</h3>
+            <p class="mt-2 text-sm text-ink-600">{f.desc}</p>
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal class="mt-10">
+        <a href={featuresHref} class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-800">
+          See all features <Icon name="lucide:arrow-right" class="h-4 w-4" />
+        </a>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- Stats strip -->
+  <section class="border-y border-ink-200/70 bg-white">
+    <div class="container-wide grid grid-cols-2 gap-8 py-14 sm:grid-cols-4">
+      {stats.map((s, i) => (
+        <Reveal delay={40 * i} class="text-center sm:text-left">
+          <div class="bg-gradient-to-br from-brand-500 to-brand-700 bg-clip-text font-display text-5xl font-bold tracking-tight text-transparent sm:text-6xl">
+            {s.n}
+          </div>
+          <div class="mt-2 text-sm font-medium text-ink-500" set:html={s.l}></div>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+
+  <!-- 3 columns explainer -->
+  <section class="container-wide py-24">
+    <Reveal class="max-w-2xl">
+      <span class="section-eyebrow">How it works</span>
+      <h2 class="h2 mt-4">Model once. Generate everything.</h2>
+      <p class="lede">From a single, simple model — code, infrastructure, AI agents, and deployments fall out the other side.</p>
+    </Reveal>
+
+    <div class="mt-14 grid gap-10 md:grid-cols-3">
+      {steps.map((s, i) => (
+        <Reveal delay={50 * i} class="relative">
+          <div class="step-num">{s.n}</div>
+          <h3 class="mt-5 font-display text-2xl font-semibold text-ink-900">{s.t}</h3>
+          <p class="mt-3 text-ink-600">{s.d}</p>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA banner -->
+  <section class="container-wide pb-24">
+    <Reveal class="relative overflow-hidden rounded-3xl border border-brand-200/50 bg-gradient-to-br from-brand-50 via-white to-brand-50 p-10 sm:p-14">
+      <div class="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-200/40 blur-3xl"></div>
+      <div class="relative">
+        <h2 class="font-display text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
+          Wondering whether BESSER is right for you?
+        </h2>
+        <p class="mt-3 max-w-xl text-ink-600">
+          Open the editor and try it in your browser, or talk to us — we love a good problem statement.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="https://editor.besser-pearl.org" target="_blank" rel="noopener" class="btn-primary">
+            <Icon name="lucide:play-circle" class="h-4 w-4" /> Try BESSER
+          </a>
+          <a href={contactHref} class="btn-secondary">
+            Let&rsquo;s chat
+          </a>
+        </div>
+      </div>
+    </Reveal>
+  </section>
+</Layout>

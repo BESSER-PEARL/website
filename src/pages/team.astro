@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Reveal from '../components/Reveal.astro';
+import { Icon } from 'astro-icon/components';
+import { team } from '../data/team';
+
+const base = import.meta.env.BASE_URL;
+function photoSrc(p: string) {
+  return `${base}${p.replace(/^\//, '')}`.replace(/\/+/g, '/');
+}
+---
+<Layout title="Team — BESSER">
+  <section class="container-wide pt-20 pb-10">
+    <Reveal class="max-w-3xl">
+      <span class="section-eyebrow">Team</span>
+      <h1 class="h2 mt-4 text-4xl sm:text-5xl">The people behind BESSER.</h1>
+      <p class="lede">A research-led team based at the Luxembourg Institute of Science &amp; Technology and SnT / University of Luxembourg, working on the next generation of low-code, AI-assisted software engineering.</p>
+    </Reveal>
+  </section>
+
+  <section class="container-wide pb-24">
+    <div class="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+      {team.map((m, i) => (
+        <Reveal as="div" delay={15 * (i % 10)}>
+          <a
+            href={m.link}
+            target="_blank"
+            rel="noopener"
+            class="group card card-hover overflow-hidden p-0 block"
+          >
+            <div class="aspect-[4/5] overflow-hidden bg-ink-100">
+              <img
+                src={photoSrc(m.photo)}
+                alt={m.name}
+                loading="lazy"
+                class="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.04]"
+              />
+            </div>
+            <div class="p-4">
+              <h3 class="font-display text-sm font-semibold text-ink-900 group-hover:text-brand-700">
+                {m.name}
+              </h3>
+              <span class="mt-1 inline-flex items-center gap-1 text-xs text-ink-500">
+                Profile <Icon name="lucide:external-link" class="h-3 w-3" />
+              </span>
+            </div>
+          </a>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+</Layout>

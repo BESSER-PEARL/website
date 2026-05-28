@@ -4,6 +4,9 @@ dist-ssr
 *.local
 .vite
 
+# Astro
+.astro
+
 # OS
 .DS_Store
 Thumbs.db

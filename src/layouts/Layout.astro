@@ -1,0 +1,57 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'BESSER — Better Software, Faster',
+  description = 'BESSER — open-source low-code platform to build smart applications faster. Free, AI-powered, model-driven.',
+} = Astro.props;
+
+const favicon = `${import.meta.env.BASE_URL}favicon.ico`.replace(/\/+/g, '/');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" type="image/x-icon" href={favicon} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body class="bg-white text-ink-900 antialiased">
+    <div class="flex min-h-screen flex-col">
+      <Nav />
+      <main class="flex-1"><slot /></main>
+      <Footer />
+    </div>
+
+    <script>
+      // Scroll-reveal: flips [data-revealed] on .reveal elements once they enter the viewport.
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.setAttribute('data-revealed', '');
+              observer.unobserve(entry.target);
+            }
+          }
+        },
+        { rootMargin: '-60px 0px' },
+      );
+      for (const el of document.querySelectorAll('.reveal')) observer.observe(el);
+    </script>
+  </body>
+</html>
