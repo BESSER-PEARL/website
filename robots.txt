@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://besser-pearl.org/website/sitemap-index.xml
