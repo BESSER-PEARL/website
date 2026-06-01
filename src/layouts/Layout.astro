@@ -14,6 +14,8 @@ const base = import.meta.env.BASE_URL;
 // Absolute canonical URL + logo (needs `site` in astro.config).
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const logo = Astro.site ? new URL(`${base}brand/besser_logo.webp`, Astro.site).href : undefined;
+// Social share image (1200×630). See public/og-card.html for the source design.
+const ogImage = Astro.site ? new URL(`${base}og-image.png`, Astro.site).href : undefined;
 
 const orgSchema = {
   '@context': 'https://schema.org',
@@ -42,6 +44,22 @@ const orgSchema = {
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" type="image/x-icon" href={`${base}favicon.ico`} />
+
+    {/* Open Graph (LinkedIn, Slack, Facebook, …) */}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BESSER" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image:alt" content="BESSER — Better software, faster." />}
+
+    {/* Twitter / X */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
