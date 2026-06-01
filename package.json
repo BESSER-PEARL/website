@@ -12,6 +12,7 @@
     "fetch-linkedin": "node scripts/fetch-linkedin.mjs"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "astro": "^6.4.2",
     "lucide-astro": "^0.556.0"
   },
