@@ -1,0 +1,306 @@
+---
+import { Menu, X, Github, ExternalLink, ChevronDown } from 'lucide-astro';
+
+const base = import.meta.env.BASE_URL; // e.g. '/website/' or '/'
+const href = (path) => (path ? base + path : base);
+
+// Current route (computed at build time), stripped of base → '' | 'features' | 'research/projects' ...
+const baseNoSlash = base.replace(/\/$/, '');
+let current = Astro.url.pathname;
+if (baseNoSlash && current.startsWith(baseNoSlash)) current = current.slice(baseNoSlash.length);
+current = current.replace(/^\//, '').replace(/\/$/, '');
+
+const isActive = (path, exact = false) =>
+  exact ? current === '' : current === path || current.startsWith(path + '/');
+
+const items = [
+  { path: '', label: 'Home', exact: true },
+  { path: 'features', label: 'Features' },
+  { path: 'services', label: 'Services' },
+];
+const itemsAfter = [
+  { path: 'team', label: 'Team' },
+  { path: 'news', label: 'News' },
+  { path: 'contact', label: 'Contact' },
+];
+const researchLinks = [
+  { path: 'research/publications', label: 'Publications', desc: 'Peer-reviewed papers' },
+  { path: 'research/projects', label: 'Projects', desc: 'Active research initiatives' },
+];
+const learnLinks = [
+  { href: 'https://besser.readthedocs.io/en/latest/', label: 'Docs', desc: 'API reference & guides' },
+  { href: 'https://modeling-languages.com/', label: 'Blog', desc: 'Articles from the team' },
+  { href: 'https://lowcode-book.com/', label: 'Book', desc: 'The low-code companion' },
+];
+
+const linkClass = (active) =>
+  [
+    'rounded-lg px-3 py-2 text-sm font-medium transition',
+    active ? 'text-brand-700' : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100',
+  ].join(' ');
+
+const researchActive = current.startsWith('research');
+---
+
+<header
+  id="site-header"
+  class="sticky top-0 z-40 w-full border-b border-transparent bg-transparent transition"
+>
+  <div class="container-wide flex h-16 items-center justify-between gap-4">
+    <a href={href('')} class="flex items-center" aria-label="BESSER home">
+      <img src={base + 'brand/besser_logo.webp'} alt="BESSER" class="h-9 w-auto" decoding="async" />
+    </a>
+
+    <nav class="hidden items-center gap-1 md:flex">
+      {items.map((it) => (
+        <a href={href(it.path)} class={linkClass(isActive(it.path, it.exact))}>{it.label}</a>
+      ))}
+
+      {/* Research dropdown */}
+      <div class="relative" data-dropdown>
+        <button
+          type="button"
+          data-dropdown-toggle
+          aria-haspopup="menu"
+          aria-expanded="false"
+          class={[
+            'inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition',
+            researchActive ? 'text-brand-700' : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100',
+          ].join(' ')}
+        >
+          Research
+          <ChevronDown class="h-3.5 w-3.5 opacity-70 transition" data-chevron />
+        </button>
+        <div
+          role="menu"
+          data-dropdown-menu
+          class="absolute left-1/2 top-full z-50 mt-1 hidden w-64 -translate-x-1/2 rounded-xl border border-ink-200/80 bg-white p-2 shadow-lg shadow-ink-900/5"
+        >
+          {researchLinks.map((l) => (
+            <a
+              href={href(l.path)}
+              class={[
+                'block rounded-lg px-3 py-2 text-sm transition',
+                current === l.path ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+              ].join(' ')}
+            >
+              <div class="font-medium">{l.label}</div>
+              <div class="text-xs text-ink-500">{l.desc}</div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {itemsAfter.map((it) => (
+        <a href={href(it.path)} class={linkClass(isActive(it.path, it.exact))}>{it.label}</a>
+      ))}
+
+      <span class="mx-2 h-5 w-px bg-ink-200"></span>
+
+      {/* Learn dropdown */}
+      <div class="relative" data-dropdown>
+        <button
+          type="button"
+          data-dropdown-toggle
+          aria-haspopup="menu"
+          aria-expanded="false"
+          class="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-ink-600 transition hover:bg-ink-100 hover:text-ink-900"
+        >
+          Learn
+          <ChevronDown class="h-3.5 w-3.5 opacity-70 transition" data-chevron />
+        </button>
+        <div
+          role="menu"
+          data-dropdown-menu
+          class="absolute left-1/2 top-full z-50 mt-1 hidden w-64 -translate-x-1/2 rounded-xl border border-ink-200/80 bg-white p-2 shadow-lg shadow-ink-900/5"
+        >
+          {learnLinks.map((l) => (
+            <a
+              href={l.href}
+              target="_blank"
+              rel="noopener"
+              class="flex items-start justify-between gap-3 rounded-lg px-3 py-2 text-sm text-ink-700 transition hover:bg-ink-100"
+            >
+              <div>
+                <div class="font-medium">{l.label}</div>
+                <div class="text-xs text-ink-500">{l.desc}</div>
+              </div>
+              <ExternalLink class="mt-1 h-3.5 w-3.5 shrink-0 opacity-60" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a
+        href="https://github.com/BESSER-PEARL/BESSER"
+        target="_blank"
+        rel="noopener"
+        aria-label="GitHub"
+        class="hidden h-10 w-10 items-center justify-center rounded-lg text-ink-600 hover:bg-ink-100 hover:text-ink-900 sm:inline-flex"
+      >
+        <Github class="h-5 w-5" />
+      </a>
+      <a href="https://editor.besser-pearl.org" target="_blank" rel="noopener" class="btn-primary py-2.5 text-sm">
+        Try BESSER
+      </a>
+      <button
+        type="button"
+        data-mobile-toggle
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-ink-700 hover:bg-ink-100 md:hidden"
+      >
+        <Menu class="h-5 w-5" data-icon-menu />
+        <X class="hidden h-5 w-5" data-icon-close />
+      </button>
+    </div>
+  </div>
+
+  {/* Mobile panel */}
+  <div class="hidden border-t border-ink-200/80 bg-white md:hidden" data-mobile-panel>
+    <nav class="container-wide flex flex-col py-3">
+      {items.map((it) => (
+        <a
+          href={href(it.path)}
+          class={[
+            'rounded-lg px-3 py-3 text-sm font-medium',
+            isActive(it.path, it.exact) ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+          ].join(' ')}
+        >
+          {it.label}
+        </a>
+      ))}
+
+      {/* Research group */}
+      <button
+        type="button"
+        data-collapse-toggle
+        aria-expanded="false"
+        class={[
+          'flex items-center justify-between rounded-lg px-3 py-3 text-sm font-medium',
+          researchActive ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+        ].join(' ')}
+      >
+        Research
+        <ChevronDown class="h-4 w-4 transition" data-chevron />
+      </button>
+      <div class="ml-3 mt-1 hidden flex-col border-l border-ink-200 pl-3" data-collapse-panel>
+        {researchLinks.map((l) => (
+          <a
+            href={href(l.path)}
+            class={[
+              'rounded-lg px-3 py-2 text-sm font-medium',
+              current === l.path ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+            ].join(' ')}
+          >
+            {l.label}
+          </a>
+        ))}
+      </div>
+
+      {itemsAfter.map((it) => (
+        <a
+          href={href(it.path)}
+          class={[
+            'rounded-lg px-3 py-3 text-sm font-medium',
+            isActive(it.path, it.exact) ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+          ].join(' ')}
+        >
+          {it.label}
+        </a>
+      ))}
+
+      <hr class="my-2 border-ink-200" />
+
+      {/* Learn group */}
+      <button
+        type="button"
+        data-collapse-toggle
+        aria-expanded="false"
+        class="flex items-center justify-between rounded-lg px-3 py-3 text-sm font-medium text-ink-700 hover:bg-ink-100"
+      >
+        Learn
+        <ChevronDown class="h-4 w-4 transition" data-chevron />
+      </button>
+      <div class="ml-3 mt-1 hidden flex-col border-l border-ink-200 pl-3" data-collapse-panel>
+        {learnLinks.map((l) => (
+          <a
+            href={l.href}
+            target="_blank"
+            rel="noopener"
+            class="flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-ink-700 hover:bg-ink-100"
+          >
+            {l.label}
+            <ExternalLink class="h-3.5 w-3.5 opacity-60" />
+          </a>
+        ))}
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Scroll backdrop
+  const header = document.getElementById('site-header');
+  if (header) {
+    const onScroll = () => {
+      const s = window.scrollY > 8;
+      header.classList.toggle('border-ink-200/80', s);
+      header.classList.toggle('bg-white/80', s);
+      header.classList.toggle('backdrop-blur', s);
+      header.classList.toggle('border-transparent', !s);
+      header.classList.toggle('bg-transparent', !s);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  // Desktop dropdowns (hover + click + outside/escape close)
+  const dropdowns = Array.from(document.querySelectorAll('[data-dropdown]'));
+  const setDropdown = (dd, open) => {
+    const menu = dd.querySelector('[data-dropdown-menu]');
+    const toggle = dd.querySelector('[data-dropdown-toggle]');
+    const chevron = dd.querySelector('[data-chevron]');
+    menu?.classList.toggle('hidden', !open);
+    toggle?.setAttribute('aria-expanded', String(open));
+    chevron?.classList.toggle('rotate-180', open);
+  };
+  dropdowns.forEach((dd) => {
+    dd.addEventListener('mouseenter', () => setDropdown(dd, true));
+    dd.addEventListener('mouseleave', () => setDropdown(dd, false));
+    dd.querySelector('[data-dropdown-toggle]')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const menu = dd.querySelector('[data-dropdown-menu]');
+      setDropdown(dd, menu?.classList.contains('hidden') ?? true);
+    });
+  });
+  document.addEventListener('click', () => dropdowns.forEach((dd) => setDropdown(dd, false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') dropdowns.forEach((dd) => setDropdown(dd, false));
+  });
+
+  // Mobile menu
+  const mobileToggle = document.querySelector('[data-mobile-toggle]');
+  const mobilePanel = document.querySelector('[data-mobile-panel]');
+  const iconMenu = document.querySelector('[data-icon-menu]');
+  const iconClose = document.querySelector('[data-icon-close]');
+  mobileToggle?.addEventListener('click', () => {
+    const open = mobilePanel?.classList.toggle('hidden') === false;
+    mobileToggle.setAttribute('aria-expanded', String(open));
+    iconMenu?.classList.toggle('hidden', open);
+    iconClose?.classList.toggle('hidden', !open);
+  });
+
+  // Mobile collapsible groups
+  document.querySelectorAll('[data-collapse-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const panel = btn.nextElementSibling;
+      const chevron = btn.querySelector('[data-chevron]');
+      const open = panel?.classList.toggle('hidden') === false;
+      btn.setAttribute('aria-expanded', String(open));
+      chevron?.classList.toggle('rotate-180', open);
+    });
+  });
+</script>

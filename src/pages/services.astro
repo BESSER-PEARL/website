@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Settings2, Shuffle, GraduationCap, MessageCircle, Sparkles } from 'lucide-astro';
+
+const base = import.meta.env.BASE_URL;
+
+const services = [
+  {
+    icon: Settings2,
+    title: 'Adaptation & configuration',
+    desc: 'Customization assistance for domain-specific needs and technology stacks — including code-generator tuning and adding new DSL modeling languages.',
+  },
+  {
+    icon: Shuffle,
+    title: 'Low-code migration',
+    desc: 'Migration assistance between low-code platforms using BESSER as an intermediary. Unify project management across heterogeneous tools.',
+  },
+  {
+    icon: GraduationCap,
+    title: 'Teaching low-code',
+    desc: 'Custom training programs and seminars covering low-code development phases and software modeling — for teams transitioning to low-code.',
+  },
+];
+---
+
+<Layout title="Services — BESSER">
+  <section class="container-wide pt-20 pb-10">
+    <div class="reveal max-w-3xl">
+      <span class="section-eyebrow">Services</span>
+      <h1 class="h2 mt-4 text-4xl sm:text-5xl">Discover what else BESSER can do for you.</h1>
+      <p class="lede">
+        BESSER is <strong class="text-ink-900">free and open source</strong> — no freemium, no hidden fees.
+        Below are a few areas where we typically collaborate with research and engineering teams. If your situation is different, just reach out.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-wide pb-12">
+    <div class="grid gap-5 md:grid-cols-3">
+      {services.map((s, i) => {
+        const Icon = s.icon;
+        return (
+          <article class="reveal card card-hover h-full" style={`transition-delay:${50 * i}ms`}>
+            <div class="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600">
+              <Icon class="h-5 w-5" />
+            </div>
+            <h2 class="mt-5 font-display text-lg font-semibold text-ink-900">{s.title}</h2>
+            <p class="mt-2 text-sm text-ink-600">{s.desc}</p>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="container-wide pb-24">
+    <div class="reveal relative overflow-hidden rounded-3xl border border-brand-200/50 bg-gradient-to-br from-brand-50 via-white to-brand-50 p-10 sm:p-14">
+      <div class="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-200/40 blur-3xl"></div>
+      <div class="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <span class="section-eyebrow"><Sparkles class="h-3.5 w-3.5" /> Anything else?</span>
+          <h2 class="mt-3 font-display text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
+            Don’t see what you need?
+          </h2>
+          <p class="mt-2 max-w-xl text-ink-600">Let’s just have a chat. Tell us your problem — we’ll tell you whether BESSER fits.</p>
+        </div>
+        <a href={base + 'contact'} class="btn-primary self-start sm:self-auto">
+          <MessageCircle class="h-4 w-4" /> Get in touch
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

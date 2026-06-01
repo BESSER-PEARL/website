@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Linkedin, ArrowUpRight } from 'lucide-astro';
+import { news, linkedInPages } from '../data/news.js';
+
+const pages = linkedInPages.filter((p) => p.url);
+---
+
+<Layout title="News — BESSER">
+  <section class="container-wide pt-20 pb-10">
+    <div class="reveal max-w-3xl">
+      <span class="section-eyebrow">News</span>
+      <h1 class="h2 mt-4 text-4xl sm:text-5xl">What we’ve been up to.</h1>
+      <p class="lede">Updates, releases, talks, and milestones — straight from our LinkedIn.</p>
+      {pages.length > 0 && (
+        <div class="mt-6 flex flex-wrap gap-3">
+          {pages.map((p) => (
+            <a href={p.url} target="_blank" rel="noopener" class="btn-secondary">
+              <Linkedin class="h-4 w-4" /> {p.label}
+              <ArrowUpRight class="h-4 w-4 opacity-60" />
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="container-wide pb-24">
+    {news.length > 0 ? (
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {news.map((item, i) => (
+          <div class="reveal overflow-hidden rounded-2xl border border-ink-200/70 bg-white shadow-soft" style={`transition-delay:${40 * (i % 3)}ms`}>
+            {item.source && (
+              <div class="flex items-center gap-2 border-b border-ink-100 px-4 py-2.5 text-xs font-medium text-ink-500">
+                <Linkedin class="h-3.5 w-3.5 text-brand-600" /> {item.source}
+              </div>
+            )}
+            <iframe
+              src={item.embedSrc}
+              height={item.height ?? 560}
+              class="w-full"
+              frameborder="0"
+              allowfullscreen
+              loading="lazy"
+              title={`LinkedIn post from ${item.source ?? 'BESSER'}`}
+            ></iframe>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="reveal card mx-auto max-w-2xl text-center">
+        <div class="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-brand-50 text-brand-600">
+          <Linkedin class="h-6 w-6" />
+        </div>
+        <h2 class="mt-4 font-display text-xl font-semibold text-ink-900">No posts added yet</h2>
+        <p class="mt-2 text-sm text-ink-600">
+          This section embeds posts from the BESSER LinkedIn page(s). Add entries in
+          <code class="rounded bg-ink-100 px-1.5 py-0.5 font-mono text-xs text-ink-800">src/data/news.js</code>
+          — each one uses LinkedIn’s official “Embed this post” link.
+        </p>
+      </div>
+    )}
+  </section>
+</Layout>

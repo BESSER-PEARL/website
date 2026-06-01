@@ -1,7 +1,7 @@
 import {
-  Cpu, Sparkles, ToyBrick, Layers, Code2, Rocket, FolderTree, ShieldCheck,
-  TerminalSquare, Database, Boxes, FileInput, Scale, Network,
-} from 'lucide-react';
+  Cpu, Sparkles, ToyBrick, Layers, Code2, Rocket,
+  TerminalSquare, Boxes,
+} from 'lucide-astro';
 
 export const heroFeatures = [
   {

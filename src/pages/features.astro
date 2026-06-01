@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { allFeatures } from '../data/features.js';
+---
+
+<Layout title="Features — BESSER">
+  <section class="container-wide py-24">
+    <div class="reveal max-w-3xl">
+      <span class="section-eyebrow">Features</span>
+      <h1 class="h2 mt-4 text-4xl sm:text-5xl">Everything BESSER gives you, in one place.</h1>
+      <p class="lede">A complete, open-source low-code toolchain — from modeling to deployment, with AI baked in.</p>
+    </div>
+
+    <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {allFeatures.map((f, i) => {
+        const Icon = f.icon;
+        return (
+          <article class="reveal card card-hover" style={`transition-delay:${25 * (i % 6)}ms`}>
+            <div class="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600">
+              <Icon class="h-5 w-5" />
+            </div>
+            <h2 class="mt-5 font-display text-lg font-semibold text-ink-900" set:html={f.title}></h2>
+            <p class="mt-2 text-sm leading-relaxed text-ink-600">{f.desc}</p>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+</Layout>

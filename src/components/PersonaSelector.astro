@@ -1,0 +1,155 @@
+---
+import { Code2, FlaskConical, Handshake, GraduationCap, ArrowRight, ArrowUpRight } from 'lucide-astro';
+
+const base = import.meta.env.BASE_URL;
+const internal = (p) => base + p;
+
+// Each persona tailors the headline, blurb, and recommended next steps.
+const personas = [
+  {
+    key: 'developer',
+    icon: Code2,
+    label: 'Build software, fast',
+    headline: 'Go from model to running app — without the boilerplate.',
+    blurb: 'Model once in the online editor and let BESSER generate APIs, databases, back-ends, and deployments for the stacks you already use.',
+    actions: [
+      { label: 'Open the editor', href: 'https://editor.besser-pearl.org', external: true },
+      { label: 'See all features', path: 'features' },
+      { label: 'Read the docs', href: 'https://besser.readthedocs.io/en/latest/', external: true },
+    ],
+  },
+  {
+    key: 'researcher',
+    icon: FlaskConical,
+    label: 'Explore the research',
+    headline: 'Peer-reviewed work at the intersection of low-code, modeling, and AI.',
+    blurb: 'BESSER is research-led. Dig into our publications and the active projects where it’s being put to work, or reach out about a collaboration.',
+    actions: [
+      { label: 'Publications', path: 'research/publications' },
+      { label: 'Research projects', path: 'research/projects' },
+      { label: 'Read the blog', href: 'https://modeling-languages.com/', external: true },
+    ],
+  },
+  {
+    key: 'partner',
+    icon: Handshake,
+    label: 'Partner or fund a project',
+    headline: 'Build on BESSER together — from EU programmes to custom engagements.',
+    blurb: 'We collaborate with industry and research partners on adaptation, migration, and large-scale projects like our EU Horizon work.',
+    actions: [
+      { label: 'Our services', path: 'services' },
+      { label: 'EU & research projects', path: 'research/projects' },
+      { label: 'Get in touch', path: 'contact' },
+    ],
+  },
+  {
+    key: 'student',
+    icon: GraduationCap,
+    label: 'Learn or teach low-code',
+    headline: 'Everything you need to learn — and teach — modern low-code.',
+    blurb: 'Start with the docs and the companion book, then explore training and seminars for teams moving to low-code.',
+    actions: [
+      { label: 'Read the docs', href: 'https://besser.readthedocs.io/en/latest/', external: true },
+      { label: 'The low-code book', href: 'https://lowcode-book.com/', external: true },
+      { label: 'Training & services', path: 'services' },
+    ],
+  },
+];
+---
+
+<section class="container-wide border-y border-ink-200/70 bg-ink-50/40 py-14" data-persona-root>
+  <div class="reveal mx-auto max-w-2xl text-center">
+    <span class="section-eyebrow">Tailor this page</span>
+    <h2 class="mt-4 font-display text-2xl font-bold tracking-tight text-ink-900 sm:text-3xl">
+      What’s your goal with BESSER?
+    </h2>
+    <p class="mt-2 text-ink-600">Pick one and we’ll point you to the right place. You can change it anytime.</p>
+  </div>
+
+  {/* Choices */}
+  <div class="reveal mx-auto mt-8 grid max-w-4xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    {personas.map((p) => {
+      const Icon = p.icon;
+      return (
+        <button
+          type="button"
+          data-persona-choice={p.key}
+          aria-pressed="false"
+          class="group flex items-center gap-3 rounded-xl border border-ink-200 bg-white px-4 py-3 text-left transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft"
+        >
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-50 text-brand-600">
+            <Icon class="h-5 w-5" />
+          </span>
+          <span class="text-sm font-semibold text-ink-800">{p.label}</span>
+        </button>
+      );
+    })}
+  </div>
+
+  {/* Tailored panels (one shown at a time) */}
+  <div class="mx-auto mt-8 max-w-3xl">
+    {personas.map((p) => (
+      <div
+        data-persona-panel={p.key}
+        hidden
+        class="rounded-2xl border border-brand-200/60 bg-gradient-to-br from-brand-50 via-white to-brand-50 p-8 shadow-soft"
+      >
+        <h3 class="font-display text-xl font-bold tracking-tight text-ink-900 sm:text-2xl">{p.headline}</h3>
+        <p class="mt-3 text-ink-600">{p.blurb}</p>
+        <div class="mt-5 flex flex-wrap gap-3">
+          {p.actions.map((a, idx) =>
+            a.external ? (
+              <a href={a.href} target="_blank" rel="noopener" class={idx === 0 ? 'btn-primary' : 'btn-secondary'}>
+                {a.label} <ArrowUpRight class="h-4 w-4 opacity-70" />
+              </a>
+            ) : (
+              <a href={internal(a.path)} class={idx === 0 ? 'btn-primary' : 'btn-secondary'}>
+                {a.label} <ArrowRight class="h-4 w-4 opacity-70" />
+              </a>
+            ),
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  const KEY = 'besser-persona';
+  const root = document.querySelector('[data-persona-root]');
+  if (root) {
+    const choices = Array.from(root.querySelectorAll('[data-persona-choice]'));
+    const panels = Array.from(root.querySelectorAll('[data-persona-panel]'));
+
+    const select = (key, { scroll = false } = {}) => {
+      choices.forEach((c) => {
+        const active = c.getAttribute('data-persona-choice') === key;
+        c.setAttribute('aria-pressed', String(active));
+        c.classList.toggle('border-brand-500', active);
+        c.classList.toggle('ring-2', active);
+        c.classList.toggle('ring-brand-200', active);
+        c.classList.toggle('bg-brand-50/40', active);
+      });
+      panels.forEach((p) => {
+        const match = p.getAttribute('data-persona-panel') === key;
+        p.hidden = !match;
+        if (match && scroll) p.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    };
+
+    choices.forEach((c) => {
+      c.addEventListener('click', () => {
+        const key = c.getAttribute('data-persona-choice');
+        try { localStorage.setItem(KEY, key); } catch {}
+        select(key, { scroll: true });
+      });
+    });
+
+    // Restore a previous choice on load.
+    let saved = null;
+    try { saved = localStorage.getItem(KEY); } catch {}
+    if (saved && choices.some((c) => c.getAttribute('data-persona-choice') === saved)) {
+      select(saved);
+    }
+  }
+</script>

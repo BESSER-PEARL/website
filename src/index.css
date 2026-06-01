@@ -68,6 +68,22 @@
 }
 
 @layer utilities {
+  /* Scroll-reveal (replaces Framer Motion). Add .reveal to an element;
+     a small IntersectionObserver in Layout.astro toggles .is-visible.
+     Stagger with an inline style="transition-delay: 80ms" where needed. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 500ms ease-out, transform 500ms ease-out;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
   .blob {
     position: absolute;
     border-radius: 9999px;

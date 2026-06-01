@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Github, Mail, MapPin, MessageSquare } from 'lucide-astro';
+---
+
+<Layout title="Contact — BESSER">
+  <section class="container-narrow py-24">
+    <div class="reveal">
+      <span class="section-eyebrow">Contact</span>
+      <h1 class="h2 mt-4 text-4xl sm:text-5xl">Let’s talk.</h1>
+      <p class="lede">
+        Questions about BESSER, partnership ideas, research collaborations, or hiring conversations — pick the channel that fits.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-5 md:grid-cols-2">
+      <a
+        href="https://github.com/BESSER-PEARL/BESSER/discussions"
+        target="_blank"
+        rel="noopener"
+        class="reveal card card-hover"
+      >
+        <div class="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600">
+          <MessageSquare class="h-5 w-5" />
+        </div>
+        <h3 class="mt-5 font-display text-lg font-semibold">Open a discussion</h3>
+        <p class="mt-2 text-sm text-ink-600">Best for product questions, ideas, and feature requests. The whole team is there.</p>
+      </a>
+
+      <a
+        href="https://github.com/BESSER-PEARL/BESSER/issues/new"
+        target="_blank"
+        rel="noopener"
+        class="reveal card card-hover"
+      >
+        <div class="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600">
+          <Github class="h-5 w-5" />
+        </div>
+        <h3 class="mt-5 font-display text-lg font-semibold">File a bug</h3>
+        <p class="mt-2 text-sm text-ink-600">Reproducible issue? Open it on GitHub. We triage weekly.</p>
+      </a>
+    </div>
+
+    <div class="reveal mt-10 card">
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div>
+          <div class="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600">
+            <Mail class="h-5 w-5" />
+          </div>
+          <h3 class="mt-4 font-display text-lg font-semibold">Email</h3>
+          <p class="mt-1 text-sm text-ink-600">For partnerships, press, and serious inquiries.</p>
+          <p class="mt-3 font-mono text-sm text-ink-900">contact@besser-pearl.org</p>
+        </div>
+        <div>
+          <div class="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-600">
+            <MapPin class="h-5 w-5" />
+          </div>
+          <h3 class="mt-4 font-display text-lg font-semibold">Where we are</h3>
+          <p class="mt-1 text-sm text-ink-600">
+            Luxembourg Institute of Science &amp; Technology (LIST)<br />
+            Belval, Esch-sur-Alzette · Luxembourg
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
