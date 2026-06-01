@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Grid / Blob Backgrounds</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>html,body{margin:0;}body{width:700px;min-height:200px;box-sizing:border-box;padding:26px 28px;background:#fff;color:var(--fg1);font-family:var(--font-sans);}
+.lbl{font-family:var(--font-mono);font-size:11px;color:var(--fg3);}
+</style></head><body>
+<div class="lbl">Hero backdrop — 56px slate grid @4% + drifting blurred brand blobs</div>
+<div style="margin-top:14px;position:relative;height:130px;border-radius:16px;overflow:hidden;border:1px solid var(--border);
+  background-image:linear-gradient(to right,rgba(15,23,42,0.05) 1px,transparent 1px),linear-gradient(to bottom,rgba(15,23,42,0.05) 1px,transparent 1px);background-size:36px 36px;">
+  <div style="position:absolute;top:-40px;left:60px;width:240px;height:160px;border-radius:9999px;filter:blur(50px);background:linear-gradient(135deg,rgba(96,165,250,.5),rgba(191,219,254,.3),transparent);"></div>
+  <div style="position:absolute;bottom:-40px;right:50px;width:200px;height:150px;border-radius:9999px;filter:blur(50px);background:linear-gradient(135deg,rgba(56,189,248,.35),rgba(191,219,254,.3),transparent);"></div>
+</div></body></html>

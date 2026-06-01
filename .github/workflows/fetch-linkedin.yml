@@ -1,0 +1,68 @@
+name: Fetch LinkedIn posts
+
+# Weekly pull of recent posts from the BESSER LinkedIn page(s) → PR.
+# Mirrors the publications workflow: the bot opens a PR, a human reviews & merges.
+#
+# ── ONE-TIME SETUP (needs a BESSER LinkedIn PAGE ADMIN) ──────────────────────
+# 1. Create a LinkedIn developer app at https://www.linkedin.com/developers/apps
+#    and associate it with the BESSER company page.
+# 2. Request the "Community Management API" product for the app and wait for
+#    approval (this is the gating step — it grants the r_organization_social scope).
+# 3. As a page admin, run the OAuth authorization-code flow once to obtain a
+#    refresh token (scope: r_organization_social). Tools like Postman or the
+#    LinkedIn OAuth token generator work for this.
+# 4. Find each page's numeric organization id (the number in the admin URL,
+#    or via the organizations API).
+# 5. Add these repo secrets (Settings → Secrets and variables → Actions):
+#       LINKEDIN_ORG_IDS        e.g. "BESSER:1234567,BESSER Agentic:7654321"
+#       LINKEDIN_CLIENT_ID
+#       LINKEDIN_CLIENT_SECRET
+#       LINKEDIN_REFRESH_TOKEN
+#    (Alternatively, just LINKEDIN_ACCESS_TOKEN — but it expires in ~60 days
+#     and you'd have to rotate it manually.)
+# 6. PR creation reuses the existing PAT secret PUBLICATIONS_PR_TOKEN
+#    (org policy blocks the default GITHUB_TOKEN for PRs).
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Mondays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - run: node scripts/fetch-linkedin.mjs
+        env:
+          LINKEDIN_ORG_IDS: ${{ secrets.LINKEDIN_ORG_IDS }}
+          LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
+          LINKEDIN_CLIENT_SECRET: ${{ secrets.LINKEDIN_CLIENT_SECRET }}
+          LINKEDIN_REFRESH_TOKEN: ${{ secrets.LINKEDIN_REFRESH_TOKEN }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+
+      - name: Open PR with refreshed posts
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.PUBLICATIONS_PR_TOKEN }}
+          branch: bot/fetch-linkedin
+          delete-branch: true
+          commit-message: 'News: refresh LinkedIn posts'
+          title: 'News: refresh LinkedIn posts'
+          body: |
+            Automated weekly pull of recent posts from the BESSER LinkedIn page(s)
+            via the LinkedIn Community Management API.
+
+            The `news` array in `src/data/news.js` is bot-managed (replaced with the
+            latest posts each run) — review the rendered cards on the News page before
+            merging, and don't hand-edit that array.

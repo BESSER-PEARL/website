@@ -13,19 +13,18 @@ current = current.replace(/^\//, '').replace(/\/$/, '');
 const isActive = (path, exact = false) =>
   exact ? current === '' : current === path || current.startsWith(path + '/');
 
-const items = [
-  { path: '', label: 'Home', exact: true },
-  { path: 'features', label: 'Features' },
-  { path: 'services', label: 'Services' },
-];
+// Top-level links rendered before / after the Features + Research dropdowns.
+const home = { path: '', label: 'Home', exact: true };
+const services = { path: 'services', label: 'Services' };
 const itemsAfter = [
   { path: 'team', label: 'Team' },
   { path: 'news', label: 'News' },
   { path: 'contact', label: 'Contact' },
 ];
-const researchLinks = [
-  { path: 'research/publications', label: 'Publications', desc: 'Peer-reviewed papers' },
-  { path: 'research/projects', label: 'Projects', desc: 'Active research initiatives' },
+
+const featureLinks = [
+  { path: 'features', label: 'BESSER Low-code', desc: 'Model-driven low-code platform' },
+  { path: 'features/agentic-framework', label: 'BESSER Agentic Framework', desc: 'Build, run & deploy AI agents' },
 ];
 const learnLinks = [
   { href: 'https://besser.readthedocs.io/en/latest/', label: 'Docs', desc: 'API reference & guides' },
@@ -39,6 +38,7 @@ const linkClass = (active) =>
     active ? 'text-brand-700' : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100',
   ].join(' ');
 
+const featuresActive = isActive('features');
 const researchActive = current.startsWith('research');
 ---
 
@@ -52,11 +52,9 @@ const researchActive = current.startsWith('research');
     </a>
 
     <nav class="hidden items-center gap-1 md:flex">
-      {items.map((it) => (
-        <a href={href(it.path)} class={linkClass(isActive(it.path, it.exact))}>{it.label}</a>
-      ))}
+      <a href={href(home.path)} class={linkClass(isActive(home.path, home.exact))}>{home.label}</a>
 
-      {/* Research dropdown */}
+      {/* Features dropdown */}
       <div class="relative" data-dropdown>
         <button
           type="button"
@@ -65,18 +63,18 @@ const researchActive = current.startsWith('research');
           aria-expanded="false"
           class={[
             'inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition',
-            researchActive ? 'text-brand-700' : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100',
+            featuresActive ? 'text-brand-700' : 'text-ink-600 hover:text-ink-900 hover:bg-ink-100',
           ].join(' ')}
         >
-          Research
+          Features
           <ChevronDown class="h-3.5 w-3.5 opacity-70 transition" data-chevron />
         </button>
         <div
           role="menu"
           data-dropdown-menu
-          class="absolute left-1/2 top-full z-50 mt-1 hidden w-64 -translate-x-1/2 rounded-xl border border-ink-200/80 bg-white p-2 shadow-lg shadow-ink-900/5"
+          class="absolute left-1/2 top-full z-50 mt-1 hidden w-72 -translate-x-1/2 rounded-xl border border-ink-200/80 bg-white p-2 shadow-lg shadow-ink-900/5"
         >
-          {researchLinks.map((l) => (
+          {featureLinks.map((l) => (
             <a
               href={href(l.path)}
               class={[
@@ -91,8 +89,12 @@ const researchActive = current.startsWith('research');
         </div>
       </div>
 
+      <a href={href(services.path)} class={linkClass(isActive(services.path))}>{services.label}</a>
+
+      <a href={href('research/publications')} class={linkClass(researchActive)}>Research</a>
+
       {itemsAfter.map((it) => (
-        <a href={href(it.path)} class={linkClass(isActive(it.path, it.exact))}>{it.label}</a>
+        <a href={href(it.path)} class={linkClass(isActive(it.path))}>{it.label}</a>
       ))}
 
       <span class="mx-2 h-5 w-px bg-ink-200"></span>
@@ -161,33 +163,31 @@ const researchActive = current.startsWith('research');
   {/* Mobile panel */}
   <div class="hidden border-t border-ink-200/80 bg-white md:hidden" data-mobile-panel>
     <nav class="container-wide flex flex-col py-3">
-      {items.map((it) => (
-        <a
-          href={href(it.path)}
-          class={[
-            'rounded-lg px-3 py-3 text-sm font-medium',
-            isActive(it.path, it.exact) ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
-          ].join(' ')}
-        >
-          {it.label}
-        </a>
-      ))}
+      <a
+        href={href(home.path)}
+        class={[
+          'rounded-lg px-3 py-3 text-sm font-medium',
+          isActive(home.path, home.exact) ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+        ].join(' ')}
+      >
+        {home.label}
+      </a>
 
-      {/* Research group */}
+      {/* Features group */}
       <button
         type="button"
         data-collapse-toggle
         aria-expanded="false"
         class={[
           'flex items-center justify-between rounded-lg px-3 py-3 text-sm font-medium',
-          researchActive ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+          featuresActive ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
         ].join(' ')}
       >
-        Research
+        Features
         <ChevronDown class="h-4 w-4 transition" data-chevron />
       </button>
       <div class="ml-3 mt-1 hidden flex-col border-l border-ink-200 pl-3" data-collapse-panel>
-        {researchLinks.map((l) => (
+        {featureLinks.map((l) => (
           <a
             href={href(l.path)}
             class={[
@@ -200,12 +200,32 @@ const researchActive = current.startsWith('research');
         ))}
       </div>
 
+      <a
+        href={href(services.path)}
+        class={[
+          'rounded-lg px-3 py-3 text-sm font-medium',
+          isActive(services.path) ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+        ].join(' ')}
+      >
+        {services.label}
+      </a>
+
+      <a
+        href={href('research/publications')}
+        class={[
+          'rounded-lg px-3 py-3 text-sm font-medium',
+          researchActive ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+        ].join(' ')}
+      >
+        Research
+      </a>
+
       {itemsAfter.map((it) => (
         <a
           href={href(it.path)}
           class={[
             'rounded-lg px-3 py-3 text-sm font-medium',
-            isActive(it.path, it.exact) ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
+            isActive(it.path) ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-ink-100',
           ].join(' ')}
         >
           {it.label}

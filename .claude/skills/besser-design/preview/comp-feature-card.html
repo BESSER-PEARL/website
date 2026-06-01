@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Feature Card + Icon Chip</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>html,body{margin:0;}body{width:700px;min-height:230px;box-sizing:border-box;padding:26px 28px;background:#fff;color:var(--fg1);font-family:var(--font-sans);}
+.lbl{font-family:var(--font-mono);font-size:11px;color:var(--fg3);margin-bottom:14px;}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:14px;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s var(--ease-out);text-decoration:none;}
+.btn svg{width:16px;height:16px;}
+.btn-primary{background:var(--brand-600);color:#fff;padding:12px 20px;box-shadow:var(--shadow-soft);border:none;}
+.btn-primary:hover{background:var(--brand-700);transform:translateY(-2px);}
+.btn-secondary{background:#fff;color:var(--ink-700);padding:12px 20px;border:1px solid var(--ink-200);}
+.btn-secondary:hover{border-color:var(--ink-300);background:var(--ink-50);}
+.btn-ghost{background:transparent;color:var(--ink-600);padding:8px 12px;font-weight:500;border:none;}
+.btn-ghost:hover{color:var(--ink-900);background:var(--ink-100);}
+.chip{height:44px;width:44px;display:grid;place-items:center;border-radius:14px;background:var(--brand-50);color:var(--brand-600);}
+.chip svg{width:20px;height:20px;}
+.card{position:relative;border-radius:16px;border:1px solid var(--border);background:#fff;padding:22px;box-shadow:var(--shadow-soft);transition:all .3s var(--ease-out);}
+.card-hover{border-color:var(--border-accent);box-shadow:var(--shadow-card-hover);transform:translateY(-4px);}
+</style>
+<script src="https://unpkg.com/lucide@0.288.0/dist/umd/lucide.min.js"></script></head><body>
+<div class="lbl">card + card-hover · 44px brand-50 icon chip · Space Grotesk title</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+  <div class="card">
+    <div class="chip"><i data-lucide="cpu"></i></div>
+    <h3 style="margin:18px 0 0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink-900);">15+ generators</h3>
+    <p style="margin:8px 0 0;font-size:13px;line-height:1.55;color:var(--fg2);">Databases, REST APIs, web apps, AI agents, deployment manifests — out of the box.</p>
+  </div>
+  <div class="card card-hover">
+    <div class="chip"><i data-lucide="sparkles"></i></div>
+    <h3 style="margin:18px 0 0;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--ink-900);">AI-powered</h3>
+    <p style="margin:8px 0 0;font-size:13px;line-height:1.55;color:var(--fg2);">Combines AI and low-code to accelerate modeling and embed AI components.</p>
+    <div style="position:absolute;inset:0;border-radius:16px;background:linear-gradient(135deg,rgba(59,130,246,.08),transparent 55%);pointer-events:none;"></div>
+  </div>
+</div>
+<div style="font-family:var(--font-mono);font-size:10px;color:var(--fg3);margin-top:10px;text-align:right;">hover state →</div>
+<script>lucide.createIcons();</script></body></html>

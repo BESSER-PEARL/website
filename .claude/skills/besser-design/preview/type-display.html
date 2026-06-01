@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Display & Headings</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;}
+  body{width:700px;min-height:220px;box-sizing:border-box;padding:26px 28px;background:#fff;color:var(--fg1);}
+  .row{display:flex;}
+  .lbl{font-family:var(--font-mono);font-size:11px;color:var(--fg3);}
+  
+</style>
+</head>
+<body>
+
+<div style="display:flex;flex-direction:column;gap:18px;">
+  <div>
+    <div class="lbl">Space Grotesk · Display · 64/700 · -0.02em</div>
+    <div style="font-family:var(--font-display);font-weight:700;font-size:56px;line-height:1.0;letter-spacing:-0.02em;color:var(--fg1);">Better software, <span class="ds-gradient-text">faster</span>.</div>
+  </div>
+  <div style="display:flex;gap:32px;align-items:baseline;flex-wrap:wrap;">
+    <div><div class="lbl">H2 · 42/700</div><div style="font-family:var(--font-display);font-weight:700;font-size:34px;letter-spacing:-0.02em;line-height:1.05;">Model everything</div></div>
+    <div><div class="lbl">H3 · 18/600</div><div style="font-family:var(--font-display);font-weight:600;font-size:18px;">Friendly interface</div></div>
+  </div>
+</div>
+</body>
+</html>

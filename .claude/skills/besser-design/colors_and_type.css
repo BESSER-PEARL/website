@@ -1,0 +1,209 @@
+/* ============================================================
+   BESSER Design System — Color & Type Foundations
+   Source of truth: BESSER-PEARL/website (tailwind.config.js,
+   src/index.css). BESSER is an open-source low-code platform.
+   Fonts: Inter (sans), Space Grotesk (display), JetBrains Mono.
+   All three are Google Fonts — substituted via CDN below.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ---------- Type families ---------- */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ---------- Ink (neutral / slate) scale ---------- */
+  --ink-50:  #f8fafc;
+  --ink-100: #f1f5f9;
+  --ink-200: #e2e8f0;
+  --ink-300: #cbd5e1;
+  --ink-400: #94a3b8;
+  --ink-500: #64748b;
+  --ink-600: #475569;
+  --ink-700: #334155;
+  --ink-800: #1e293b;
+  --ink-900: #0f172a;
+
+  /* ---------- Brand (blue) scale ---------- */
+  --brand-50:  #eef6ff;
+  --brand-100: #dbeafe;
+  --brand-200: #bfdbfe;
+  --brand-300: #93c5fd;
+  --brand-400: #60a5fa;
+  --brand-500: #3b82f6;
+  --brand-600: #2563eb;  /* primary action */
+  --brand-700: #1d4ed8;  /* primary hover  */
+  --brand-800: #1e40af;
+  --brand-900: #1e3a8a;
+
+  /* ---------- Logo gradient (teal → blue) ----------
+     The BESSER wordmark uses a cyan/teal-to-blue gradient,
+     distinct from the brand-blue UI accent. Use for the mark
+     and rare hero flourishes — NOT for UI chrome. */
+  --logo-cyan: #2bb3c0;
+  --logo-teal: #1a8fb0;
+  --logo-blue: #1f6feb;
+
+  /* ---------- Semantic surface / text roles ---------- */
+  --bg:        #ffffff;
+  --bg-subtle: #f8fafc;   /* ink-50  — section bands */
+  --bg-muted:  rgba(241,245,249,0.4); /* ink-50/40 feature band */
+  --fg1:       var(--ink-900);  /* headings, primary text */
+  --fg2:       var(--ink-600);  /* body copy */
+  --fg3:       var(--ink-500);  /* captions, meta */
+  --fg-inverse: #ffffff;
+  --accent:     var(--brand-600);
+  --accent-hover: var(--brand-700);
+  --accent-soft-bg: var(--brand-50);
+  --accent-soft-fg: var(--brand-700);
+
+  /* ---------- Borders / hairlines ---------- */
+  --border:        rgba(226,232,240,0.7);  /* ink-200/70 — default card/hairline */
+  --border-strong: var(--ink-200);
+  --border-accent: rgba(147,197,253,0.7);  /* brand-300/70 — hover card border */
+  --selection-bg: #dbeafe;
+  --selection-fg: #1e3a8a;
+
+  /* ---------- Radii ---------- */
+  --radius-sm:  0.5rem;   /* 8px  — small chips, icon tiles */
+  --radius-md:  0.75rem;  /* 12px — buttons, nav items, inputs */
+  --radius-lg:  1rem;     /* 16px — icon containers */
+  --radius-xl:  1rem;     /* 16px — buttons (rounded-xl) */
+  --radius-2xl: 1rem;     /* 16px — cards (rounded-2xl) */
+  --radius-3xl: 1.5rem;   /* 24px — CTA banners */
+  --radius-full: 9999px;  /* pills, eyebrows, dots */
+
+  /* ---------- Shadows ---------- */
+  --shadow-soft: 0 8px 30px -6px rgba(15, 23, 42, 0.08);
+  --shadow-ring: 0 0 0 1px rgba(15, 23, 42, 0.06);
+  --shadow-card-hover: 0 24px 60px -18px rgba(37, 99, 235, 0.25);
+  --shadow-screen: 0 30px 80px -20px rgba(15, 23, 42, 0.35);
+  --shadow-menu: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+
+  /* ---------- Spacing scale (Tailwind-derived, 4px base) ---------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-14: 3.5rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* ---------- Layout ---------- */
+  --container-narrow: 72rem;  /* max-w-6xl */
+  --container-wide:   80rem;  /* max-w-7xl */
+
+  /* ---------- Motion ---------- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 150ms;
+  --dur-base: 300ms;
+  --dur-reveal: 500ms;  /* framer fade-up scroll reveal */
+}
+
+/* ============================================================
+   Semantic type styles — apply directly to elements
+   ============================================================ */
+
+body {
+  font-family: var(--font-sans);
+  color: var(--fg2);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss01", "cv11";
+}
+
+::selection { background: var(--selection-bg); color: var(--selection-fg); }
+
+/* Display headline — hero (Space Grotesk, bold, tight) */
+.ds-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--fg1);
+}
+
+/* H1 / section title */
+.ds-h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--fg1);
+}
+
+/* H2 — the .h2 utility from the site */
+.ds-h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.875rem, 3vw, 2.625rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--fg1);
+}
+
+.ds-h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  color: var(--fg1);
+}
+
+/* Lede — intro paragraph under a heading */
+.ds-lede {
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--fg2);
+  max-width: 42rem;
+}
+
+/* Body */
+.ds-body {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--fg2);
+}
+
+/* Eyebrow — uppercase pill label above a heading */
+.ds-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-accent);
+  background: rgba(238,246,255,0.7);
+  padding: 0.25rem 0.75rem;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-soft-fg);
+}
+
+/* Gradient text — for the one accent word in a hero */
+.ds-gradient-text {
+  background: linear-gradient(135deg, var(--brand-500), var(--brand-700));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Mono / code / labels */
+.ds-mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--fg1);
+}

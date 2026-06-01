@@ -2,6 +2,23 @@
 import Layout from '../layouts/Layout.astro';
 import { ArrowUpRight } from 'lucide-astro';
 import { team } from '../data/team.js';
+
+// Initials for the monogram avatar, e.g. "Jordi Cabot" -> "JC".
+const initials = (name) => {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  const first = parts[0]?.[0] ?? '';
+  const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
+  return (first + last).toUpperCase();
+};
+
+// On-brand gradient palette, cycled per card for a bit of rhythm.
+const gradients = [
+  'from-brand-500 to-brand-700',
+  'from-sky-500 to-brand-600',
+  'from-indigo-500 to-brand-700',
+  'from-teal-500 to-sky-600',
+  'from-violet-500 to-indigo-600',
+];
 ---
 
 <Layout title="Team — BESSER">
@@ -10,26 +27,35 @@ import { team } from '../data/team.js';
       <span class="section-eyebrow">Team</span>
       <h1 class="h2 mt-4 text-4xl sm:text-5xl">The people behind BESSER.</h1>
       <p class="lede">A research-led team based at the Luxembourg Institute of Science &amp; Technology and SnT / University of Luxembourg, working on the next generation of low-code, AI-assisted software engineering.</p>
+      <p class="mt-4 text-sm font-medium text-ink-500">{team.length} researchers &amp; engineers</p>
     </div>
   </section>
 
   <section class="container-wide pb-24">
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {team.map((m, i) => (
         <a
           href={m.link}
           target="_blank"
           rel="noopener"
-          class="reveal group card card-hover flex items-start justify-between gap-4"
+          class="reveal group card card-hover"
           style={`transition-delay:${15 * (i % 9)}ms`}
         >
-          <div>
-            <h3 class="font-display text-base font-semibold text-ink-900 group-hover:text-brand-700">
-              {m.name}
-            </h3>
-            <p class="mt-1 text-sm text-ink-500">{m.expertise}</p>
+          <div class="flex items-center gap-4">
+            <span
+              class={`grid h-12 w-12 shrink-0 place-items-center rounded-full bg-gradient-to-br ${gradients[i % gradients.length]} font-display text-sm font-bold text-white shadow-soft`}
+              aria-hidden="true"
+            >
+              {initials(m.name)}
+            </span>
+            <div class="min-w-0">
+              <h3 class="font-display text-base font-semibold leading-tight text-ink-900 group-hover:text-brand-700">
+                {m.name}
+              </h3>
+              <p class="mt-1 text-sm text-ink-500">{m.expertise}</p>
+            </div>
+            <ArrowUpRight class="ml-auto h-4 w-4 shrink-0 text-ink-300 transition group-hover:text-brand-600" />
           </div>
-          <ArrowUpRight class="mt-1 h-4 w-4 shrink-0 text-ink-300 transition group-hover:text-brand-600" />
         </a>
       ))}
     </div>

@@ -2,14 +2,17 @@
 import Layout from '../layouts/Layout.astro';
 import { ArrowRight, BookOpen, Github, PlayCircle } from 'lucide-astro';
 import { heroFeatures, techStack } from '../data/features.js';
+import { team } from '../data/team.js';
+import { publications } from '../data/publications.js';
 import PersonaSelector from '../components/PersonaSelector.astro';
 
 const base = import.meta.env.BASE_URL;
 
+// Counts are derived from the data files so they stay in sync with the rest of the site.
 const stats = [
-  { n: '8+', l: 'Code generators' },
-  { n: '31', l: 'Peer-reviewed papers' },
-  { n: '23', l: 'Researchers &amp; engineers' },
+  { n: '15+', l: 'Code generators' },
+  { n: `${publications.length}`, l: 'Peer-reviewed papers' },
+  { n: `${team.length}`, l: 'Researchers &amp; engineers' },
   { n: '2', l: 'EU Horizon projects' },
 ];
 

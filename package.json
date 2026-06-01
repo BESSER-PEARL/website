@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "fetch-publications": "node scripts/fetch-publications.mjs"
+    "fetch-publications": "node scripts/fetch-publications.mjs",
+    "fetch-linkedin": "node scripts/fetch-linkedin.mjs"
   },
   "dependencies": {
     "astro": "^6.4.2",

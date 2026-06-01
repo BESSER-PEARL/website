@@ -20,14 +20,13 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22  # Astro 6 requires Node >= 22.12
           cache: npm
 
       - run: npm ci
       - run: npm run build
-
-      - name: SPA fallback (copy index.html → 404.html)
-        run: cp dist/index.html dist/404.html
+      # Astro generates a real dist/404.html (from src/pages/404.astro) and a
+      # static HTML file per route, so the old React-Router SPA fallback is gone.
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
